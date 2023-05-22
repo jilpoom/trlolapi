@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.palad.mentaltest.dto.question.QuestionDTO;
 import org.palad.mentaltest.service.QuestionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +18,15 @@ public class QuestController {
     private final QuestionService questionService;
 
     @GetMapping()
-    public List<QuestionDTO> getQuestion() {
+    public List<QuestionDTO> getQuestions() {
         return questionService.getList();
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @GetMapping("/{id}")
+    public QuestionDTO getOne(@PathVariable String id) {
+        return questionService.getOne(id);
     }
 
 

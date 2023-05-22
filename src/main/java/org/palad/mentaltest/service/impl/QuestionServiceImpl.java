@@ -29,20 +29,28 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questionGroup = questionRepository.findAll();
         log.info(questionGroup);
 
-        List<QuestionDTO> questionDTOGroup = questionGroup.stream().map( question -> {
-            QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setQuestion(question.getQuestion());
-            questionDTO.setId(question.getId());
-
-            for(int i = 0; i < question.getChoices().size(); i++) {
-                questionDTO.getChoices().add(question.getChoices().get(i).getText());
-            }
-
-            return questionDTO;
-        }).collect(Collectors.toList());
-
-
+        List<QuestionDTO> questionDTOGroup = questionGroup.stream()
+                .map( question -> mapQuetion(question))
+                .collect(Collectors.toList());
 
         return questionDTOGroup;
+    }
+
+    @Override
+    public QuestionDTO getOne(String id) {
+        Question question = questionRepository.findById(Long.valueOf(id)).orElseThrow();
+        return mapQuetion(question);
+
+    }
+
+    public QuestionDTO mapQuetion(Question question) {
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setQuestion(question.getQuestion());
+        questionDTO.setId(question.getId());
+
+        for(int i = 0; i < question.getChoices().size(); i++) {
+            questionDTO.getChoices().add(question.getChoices().get(i).getText());
+        }
+        return questionDTO;
     }
 }

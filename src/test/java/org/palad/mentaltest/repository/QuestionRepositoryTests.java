@@ -39,13 +39,13 @@ public class QuestionRepositoryTests {
     public void insertQuestionList() {
         List<Choice> list = new ArrayList<>();
         list.add(Choice.builder()
-                .text("선택지 1").build());
+                .text("괜찮아, 떨어지더라도 다음이 있잖아.").build());
         list.add(Choice.builder()
-                .text("선택지 2").build());
+                .text("이번엔 무조건 합격한다. 다음은 없다.").build());
 
         Question question = Question.builder()
                 .choices(list)
-                .question("질문 2")
+                .question("당신은 중요한 시험을 앞두고 있습니다. 당신의 마음은?")
                 .build();
 
         questionRepository.save(question);
